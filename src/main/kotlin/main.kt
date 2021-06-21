@@ -3,23 +3,30 @@
 
 fun main() {
    // "VK Pay"  "Visa" "Мир" "MasterCard" "Maestro"
-
-    println("Коммисия по карте VK Pay из суммы 1000 будет " + getCommission(inCardType = "VK Pay",inSumTransfer = 1000))
-
-    println("Коммисия по карте Visa из суммы 100 будет " + getCommission(inCardType = "Visa",inSumTransfer = 100))
-
-    println("Коммисия по карте Мир из суммы 10000 будет " + getCommission(inCardType = "Мир",inSumTransfer = 10000))
-
-    println("Коммисия по карте MasterCard из суммы 10000 (за мес - 0) будет " + getCommission(inCardType = "MasterCard",inSumTransfer = 10000))
-
-    println("Коммисия по карте Maestro из суммы 10000 (за мес - 90000) будет " + getCommission(inCardType = "Maestro",inSumTransfer = 10000,inOldSum = 90000))
-
+    println(makePay(cardType = "VK Pay",oldSum = 0,sumTransfer = 1000))
+    println(makePay(cardType = "Visa",oldSum = 0,sumTransfer = 100))
+    println(makePay(cardType = "Мир",oldSum = 0,sumTransfer = 10000))
+    println(makePay(cardType = "MasterCard",oldSum = 0,sumTransfer = 10000))
+    println(makePay(cardType = "Maestro",oldSum = 90000,sumTransfer = 10000))
 
 }
 
 
-fun getCommission(inCardType : String = "VK Pay",
-                  inOldSum : Int = 0,
+fun makePay(cardType : String,oldSum : Int,sumTransfer : Int): String{
+
+    val vStr = getOldSumTxt(cardType,oldSum)
+
+    return "Коммисия по карте $cardType из суммы $sumTransfer $vStr будет  ${getCommission(inCardType = cardType,inSumTransfer = sumTransfer,inOldSum = oldSum)}"
+}
+
+fun getOldSumTxt(inType : String,inSum : Int) : String{
+
+    return if (inType == "MasterCard" || inType == "Maestro") " (за мес - $inSum) " else ""
+
+}
+
+fun getCommission(inCardType : String,
+                  inOldSum : Int,
                   inSumTransfer : Int): Double {
     val minSumVisa = 35 * 10000 / 75
     val limitMaster = 75000
@@ -31,5 +38,6 @@ fun getCommission(inCardType : String = "VK Pay",
                                 retMaster
                             }
                       }
-    return commission.toDouble()
+      return commission.toDouble()
 }
+
