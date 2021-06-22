@@ -14,7 +14,7 @@ class MainKtTest {
         //act
         val result = makePay(inCardType,inOldSum,inSumTrnsf)
         //assert
-        assertEquals("Коммисия по карте VK Pay из суммы 1000  будет  0.0",result)
+        assertEquals("Коммисия по карте VK Pay из суммы 1000  будет  0.0 !!!",result)
     }
     @Test
     fun makePayVisa() { // "Visa",oldSum = 0,sumTransfer = 100
